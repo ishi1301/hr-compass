@@ -60,9 +60,11 @@ export default function Dashboard() {
   });
 
   const [holidays, setLocalHolidays] = useState<any[]>([]);
+  
   const [addHolidayOpen, setAddHolidayOpen] = useState(false);
   const [hDate, setHDate] = useState("");
   const [hName, setHName] = useState("");
+  
 
   const [empDetailId, setEmpDetailId] = useState<string | null>(null);
   const [search, setSearch] = useState("");
