@@ -71,7 +71,7 @@ export default function Dashboard() {
   const [zoneFilter, setZoneFilter] = useState<string>("all");
 
   useEffect(() => {
-    fetch("http://localhost:5001/employees")
+    fetch(`${import.meta.env.VITE_API_URL}/employees`)
       .then((res) => res.json())
       .then((data) => {
         const formatted = data.map((emp: any) => ({
@@ -85,7 +85,7 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:5001/attendance")
+    fetch(`${import.meta.env.VITE_API_URL}/attendance`)
       .then((res) => res.json())
       .then((data) => {
         const rows = data.data || data;

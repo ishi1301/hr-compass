@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Dialog,
-  DialogContent,
+  DialogContent, 
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -54,7 +54,7 @@ export default function BonusManagement() {
   const totalDaysInYear = isLeapYear(year) ? 366 : 365;
 
   useEffect(() => {
-    fetch("http://localhost:5001/employees")
+    fetch(`${import.meta.env.VITE_API_URL}/employees`)
       .then((res) => res.json())
       .then((data) => {
         const formatted = data.map((emp: any) => ({
@@ -68,7 +68,7 @@ export default function BonusManagement() {
       });
   }, []);
   useEffect(() => {
-    fetch("http://localhost:5001/bonus")
+    fetch(`${import.meta.env.VITE_API_URL}/bonus`)
       .then((res) => res.json())
       .then((data) => {
         console.log("BONUS DATA:", data); // debug
@@ -151,7 +151,7 @@ export default function BonusManagement() {
         return;
       }
 
-      const res = await fetch("http://localhost:5001/bonus", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/bonus`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -173,7 +173,7 @@ export default function BonusManagement() {
       toast.success("Bonus saved ✅");
 
       // 🔥 refresh list
-      const updated = await fetch("http://localhost:5001/bonus");
+      const updated = await fetch(`${import.meta.env.VITE_API_URL}/bonus`);
       const data = await updated.json();
       setBonuses(data);
 
@@ -188,7 +188,7 @@ export default function BonusManagement() {
     if (confirm("Delete this bonus entry?")) {
       // Assuming backend delete endpoint exists, e.g., DELETE /bonus with body or params
       // Adjust based on your API; here assuming delete by employeeId and year
-      await fetch("http://localhost:5001/bonus", {
+      await fetch(`${import.meta.env.VITE_API_URL}/bonus`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -199,7 +199,7 @@ export default function BonusManagement() {
         }),
       });
       // Refresh bonuses from backend
-      const res = await fetch("http://localhost:5001/bonus");
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/bonus`);
       const data = await res.json();
       setBonuses(data);
       toast.success("Deleted");

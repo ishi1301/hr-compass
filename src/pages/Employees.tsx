@@ -70,7 +70,7 @@ export default function Employees() {
   };
 
   useEffect(() => {
-    fetch("http://localhost:5001/employees")
+    fetch(`${import.meta.env.VITE_API_URL}/employees`)
       .then((res) => res.json())
       .then((data) => {
         const formatted = data.map((emp: any) => ({
@@ -100,7 +100,7 @@ export default function Employees() {
 
     try {
       if (editing) {
-        await fetch(`http://localhost:5001/employees/${form.employeeId}`, {
+        await fetch(`${import.meta.env.VITE_API_URL}/employees/${form.employeeId}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -119,7 +119,7 @@ export default function Employees() {
         toast.success("Employee updated successfully ✅");
 
         // 🔥 refresh from DB
-        const res = await fetch("http://localhost:5001/employees");
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/employees`);
         const data = await res.json();
 
         const formatted = data.map((emp: any) => ({
@@ -136,7 +136,7 @@ export default function Employees() {
         setEmployees(formatted);
       } else {
         // 🔥 SEND TO BACKEND
-        await fetch("http://localhost:5001/employees", {
+        await fetch(`${import.meta.env.VITE_API_URL}/employees`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -156,7 +156,7 @@ export default function Employees() {
         toast.success("Employee added to database ✅");
 
         // 🔥 FETCH UPDATED DATA FROM DB
-        const res = await fetch("http://localhost:5001/employees");
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/employees`);
         const data = await res.json();
 
         const formatted = data.map((emp: any) => ({
@@ -181,7 +181,7 @@ export default function Employees() {
 
   const handleDelete = async (id: string) => {
     if (confirm("Delete this employee?")) {
-      await fetch(`http://localhost:5001/employees/${id}`, {
+      await fetch(`${import.meta.env.VITE_API_URL}/employees/${id}`, {
         method: "DELETE",
       });
 
@@ -197,7 +197,7 @@ export default function Employees() {
 
     const newStatus = emp.status === "active" ? "inactive" : "active";
 
-    await fetch(`http://localhost:5001/employees/${empId}`, {
+    await fetch(`${import.meta.env.VITE_API_URL}/employees/${empId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -217,7 +217,7 @@ export default function Employees() {
     });
 
     // 🔥 REFRESH FROM DB
-    const res = await fetch("http://localhost:5001/employees");
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/employees`);
     const data = await res.json();
 
     const formatted = data.map((emp: any) => ({

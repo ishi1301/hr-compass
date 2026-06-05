@@ -35,7 +35,7 @@ export default function AttendanceUpload() {
   useEffect(() => {
     const loadAttendance = async () => {
       try {
-        const res = await fetch("http://localhost:5001/attendance"); //
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/attendance`); //
         const response = await res.json();
 
         console.log("RAW API:", response); // 👈 IMPORTANT
@@ -306,7 +306,7 @@ export default function AttendanceUpload() {
 
         console.log("FINAL RECORDS:", newRecords);
 
-        await fetch("http://localhost:5001/attendance", {
+        await fetch(`${import.meta.env.VITE_API_URL}/attendance`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -315,7 +315,7 @@ export default function AttendanceUpload() {
         });
 
         // reload attendance after upload
-        const res = await fetch("http://localhost:5001/attendance");
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/attendance`);
         const response = await res.json();
 
         const rows = response.data || [];
