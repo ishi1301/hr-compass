@@ -10,7 +10,14 @@ const { types } = require("pg");
 // 1082 = DATE type in Postgres
 types.setTypeParser(1082, (val) => val);
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://hr-compass-2.onrender.com"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 app.use(express.json());
 
 // Test route
