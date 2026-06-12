@@ -119,6 +119,50 @@ app.listen(5001, () => {
   console.log("Server running on port 5001");
 });
 
+
+app.post("/employees/bulk", async (req, res) => {
+  try {
+    const employees = req.body;
+
+    for (const emp of employees) {
+      await pool.query(
+        `INSERT INTO employees
+        (
+          employee_id,
+          name,
+          location,
+          department,
+          joining_date,
+          status,
+          zone,
+          date_of_exit
+        )
+        VALUES
+        ($1,$2,$3,$4,$5,$6,$7,$8)`,
+        [
+          emp.employeeId,
+          emp.name,
+          emp.location,
+          emp.department,
+          emp.joiningDate,
+          emp.status || "active",
+          emp.zone || "North Zone",
+          emp.exitDate || null,
+        ]
+      );
+    }
+
+    res.json({
+      success: true,
+      count: employees.length,
+    });
+  } catch (err) {
+    console.error("BULK UPLOAD ERROR:", err.message);
+    res.status(500).send(err.message);
+  }
+});
+
+
 app.put("/employees/:id", async (req, res) => {
   try {
     const id = req.params.id;
